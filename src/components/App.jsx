@@ -10,7 +10,7 @@ export const App = () => {
         color: '#010101',
       }}
     >
-      UKRAINE 23
+      TEST
     </div>
   );
 };
