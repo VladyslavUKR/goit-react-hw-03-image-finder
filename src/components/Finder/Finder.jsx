@@ -51,6 +51,10 @@ class Finder extends Component {
     });
   };
 
+  closeModal = () => {
+    this.setState({ activeModal: false, imageDetails: null });
+  };
+
   getInputValue = name => {
     this.setState({ search: name, items: [], page: 1, greeting: false });
   };
@@ -62,7 +66,7 @@ class Finder extends Component {
   };
 
   render() {
-    const { getInputValue, loadMore, showImage } = this;
+    const { getInputValue, loadMore, showImage, closeModal } = this;
     const { isLoading, error, items, greeting, activeModal, imageDetails } =
       this.state;
     return (
@@ -80,7 +84,7 @@ class Finder extends Component {
           </button>
         )}
         {activeModal && (
-          <Modal>
+          <Modal closeModal={closeModal}>
             <ImageGalleryItem {...imageDetails} />
           </Modal>
         )}
