@@ -3,9 +3,9 @@ import css from './image-gallery-item.module.css';
 
 const ImageGalleryItem = ({ tags, largeImageURL }) => {
   return (
-    <li class={css.galleryItem}>
+    <div class={css.galleryItem}>
       <img className={css.imageItem} src={largeImageURL} alt={tags} />
-    </li>
+    </div>
   );
 };
 
