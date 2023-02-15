@@ -18,7 +18,7 @@ class Modal extends Component {
   };
 
   componentWillUnmount() {
-    document.addEventListener('keydown', this.closeEsq);
+    document.removeEventListener('keydown', this.closeEsq);
   }
 
   closeOverlay = e => {
