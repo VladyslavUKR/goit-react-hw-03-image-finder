@@ -12,6 +12,6 @@
 }
 
 .modal {
-  max-width: calc(100vw - 24px);
-  max-height: calc(100vh - 12px);
+  max-width: calc(100vw - 10px);
+  max-height: calc(100vh - 6px);
 }

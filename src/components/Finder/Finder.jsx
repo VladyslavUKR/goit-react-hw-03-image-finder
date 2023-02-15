@@ -4,9 +4,11 @@ import ImageGallery from './ImageGallery/ImageGallery';
 import ImageGalleryItem from './ImageGalleryItem/ImageGalleryItem';
 import Searchbar from './Searchbar/Searchbar';
 import Modal from 'shared/services/Modal/Modal';
+import Button from './Button/Button';
 
 import { getImages } from '../../shared/services/image-api.js';
 import css from './finder.module.css';
+import Spinner from './Spinner/Spinner';
 
 class Finder extends Component {
   state = {
@@ -72,17 +74,16 @@ class Finder extends Component {
     return (
       <div className={css.finder}>
         {Boolean(greeting) && (
-          <h3 className={css.greeting}>Welcome in our app</h3>
+          <div className={css.greetingWrapper}>
+            <h3 className={css.greeting}>Welcome in our app </h3>
+            <span className={css.icon}></span>
+          </div>
         )}
-        {isLoading && <p className={css.loading}>...L o a d i n g</p>}
+        {isLoading && <Spinner />}
         <Searchbar onSubmit={getInputValue} />
         {error && <p className={css.error}>{error} Please try again later </p>}
         <ImageGallery items={items} onOpenModal={showImage} />
-        {Boolean(items.length) && (
-          <button className={css.btnLoadMore} type="button" onClick={loadMore}>
-            Load more
-          </button>
-        )}
+        {Boolean(items.length) && <Button loadMore={loadMore} />}
         {activeModal && (
           <Modal closeModal={closeModal}>
             <ImageGalleryItem {...imageDetails} />
