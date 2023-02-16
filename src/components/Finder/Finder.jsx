@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import ImageGallery from './ImageGallery/ImageGallery';
 import ImageGalleryItem from './ImageGalleryItem/ImageGalleryItem';
 import Searchbar from './Searchbar/Searchbar';
-import Modal from 'shared/services/Modal/Modal';
+import Modal from 'components/Finder/Modal/Modal';
 import Button from './Button/Button';
 
 import { getImages } from '../../shared/services/image-api.js';
@@ -20,6 +20,7 @@ class Finder extends Component {
     greeting: true,
     activeModal: false,
     imageDetails: null,
+    showBtn: false,
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -37,7 +38,10 @@ class Finder extends Component {
       const data = await getImages(search, page);
 
       this.setState(prevState => {
-        return { items: [...prevState.items, ...data.hits] };
+        return {
+          items: [...prevState.items, ...data.hits],
+          showBtn: prevState.page < Math.ceil(data.totalHits / 15),
+        };
       });
     } catch (error) {
       this.setState({ error: error.message });
@@ -69,8 +73,15 @@ class Finder extends Component {
 
   render() {
     const { getInputValue, loadMore, showImage, closeModal } = this;
-    const { isLoading, error, items, greeting, activeModal, imageDetails } =
-      this.state;
+    const {
+      isLoading,
+      error,
+      items,
+      greeting,
+      activeModal,
+      imageDetails,
+      showBtn,
+    } = this.state;
     return (
       <div className={css.finder}>
         {Boolean(greeting) && (
@@ -83,7 +94,7 @@ class Finder extends Component {
         <Searchbar onSubmit={getInputValue} />
         {error && <p className={css.error}>{error} Please try again later </p>}
         <ImageGallery items={items} onOpenModal={showImage} />
-        {Boolean(items.length) && <Button loadMore={loadMore} />}
+        {showBtn && <Button loadMore={loadMore} />}
         {activeModal && (
           <Modal closeModal={closeModal}>
             <ImageGalleryItem {...imageDetails} />
